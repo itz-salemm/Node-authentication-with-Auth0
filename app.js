@@ -5,10 +5,10 @@ require('dotenv').config();
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: process.env.BASEURL,
-  clientID: process.env.CLIENTID,
-  issuerBaseURL: process.env.ISSUER
+  secret: 'ffkafakfkfhkwehfksfkafskfsflkflfsalfalffsfaflfalsdf',
+  baseURL: 'http://localhost:3000',
+  clientID: 'OrASP6N2RBQHcuSk078LFTT2iGkAwhjl',
+  issuerBaseURL: 'https://salem-authentication.us.auth0.com'
 
 };
 
