@@ -1,34 +1,28 @@
 const express = require('express');
-const { auth } = require('express-openid-connect');
-require('dotenv').config();
+const authRoute = require('./routes/auth')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: 'ffkafakfkfhkwehfksfkafskfsflkflfsalfalffsfaflfalsdf',
-  baseURL: 'http://localhost:3000',
-  clientID: 'OrASP6N2RBQHcuSk078LFTT2iGkAwhjl',
-  issuerBaseURL: 'https://salem-authentication.us.auth0.com'
+const port = process.env.PORT || 5000
 
-};
-
+dotenv.config();
 const app = express();
+
+
+
+mongoose.connect(process.env.DBURI, { useNewUrlParser: true, useUnifiedTopology: true})
+  .then((result) => {
+  	console.log(`Launched @ port ${port}`);
+  	app.listen(port);
+  })
+  .catch((err) => console.log(err));
 
 app.set('view engine', 'ejs');
 
+app.use(express.json())
+
 app.use(express.urlencoded({ extended: true }));
 
-// auth router attaches /login, /logout, and /callback routes to the baseURL
-app.use(auth(config));
 
+app.use('/api/user', authRoute);
 
-
-// req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  console.log(req.oidc.isAuthenticated());
-  res.render("index", {isAuthenticated: req.oidc.isAuthenticated()});
-});
-
-
-
-app.listen(3000)
