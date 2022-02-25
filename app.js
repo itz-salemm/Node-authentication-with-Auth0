@@ -1,11 +1,12 @@
 const express = require('express');
 const authRoute = require('./routes/auth')
+const postRoute = require('./routes/posts')
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 const port = process.env.PORT || 5000
 
-dotenv.config();
+require('dotenv').config();
 const app = express();
 
 
@@ -25,4 +26,5 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
 
